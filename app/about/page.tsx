@@ -1,323 +1,416 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import Image from "next/image"
-import Link from "next/link"
-import { ArrowRight, Globe, Users, Leaf } from "lucide-react"
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Globe, Users, Leaf, Diamond, Award } from "lucide-react";
 
 const fadeIn = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 },
-}
-
-interface HistoryEventProps {
-  year: number;
-  title: string;
-  description: string;
-  image: string;
-  isReversed?: boolean;
-}
-
-const HistoryEvent: React.FC<HistoryEventProps> = ({ year, title, description, image, isReversed }) => (
-  <motion.div
-    className={`flex flex-col ${isReversed ? "md:flex-row-reverse" : "md:flex-row"} items-center mb-16`}
-    initial={{ opacity: 0, y: 50 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.6 }}
-  >
-    <div className="w-full md:w-1/2 mb-8 md:mb-0">
-      <Image
-        src={image || "/placeholder.svg"}
-        alt={title}
-        width={600}
-        height={400}
-        className="rounded-lg shadow-md w-full"
-      />
-    </div>
-    <div className={`w-full md:w-1/2 ${isReversed ? "md:pr-12" : "md:pl-12"}`}>
-      <h3 className="text-3xl font-serif font-bold mb-2">{year}</h3>
-      <h4 className="text-2xl font-serif mb-4">{title}</h4>
-      <p className="text-gray-600">{description}</p>
-    </div>
-  </motion.div>
-)
-
-interface TeamMemberProps {
-  name: string;
-  role: string;
-  image: string;
-  bio: string;
-}
-
-const TeamMember: React.FC<TeamMemberProps> = ({ name, role, image, bio }) => (
-  <motion.div
-    className="bg-white rounded-lg shadow-md overflow-hidden"
-    whileHover={{ y: -5, transition: { duration: 0.2 } }}
-  >
-    <Image src={image || "/placeholder.svg"} alt={name} width={300} height={300} className="w-full h-64 object-cover" />
-    <div className="p-6">
-      <h3 className="text-xl font-serif font-bold mb-2">{name}</h3>
-      <p className="text-gray-600 mb-4">{role}</p>
-      <p className="text-sm text-gray-500">{bio}</p>
-    </div>
-  </motion.div>
-)
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6 },
+};
 
 export default function AboutUs() {
-  const historyEvents = [
-    {
-      year: 1985,
-      title: "Our Humble Beginnings",
-      description: "Founded in a small workshop with a vision to bring ethically sourced gemstones to the world.",
-      image: "/images/founding.jpg",
-    },
-    {
-      year: 2000,
-      title: "Global Expansion",
-      description:
-        "Expanded operations to multiple continents, establishing a global network of mines and partnerships.",
-      image: "/images/global-expansion.jpg",
-    },
-    {
-      year: 2010,
-      title: "Ethical Mining Initiative",
-      description: "Launched our Ethical Mining Initiative, setting new industry standards for responsible sourcing.",
-      image: "/images/ethical-mining.jpg",
-    },
-    {
-      year: 2023,
-      title: "Sustainability Milestone",
-      description:
-        "Achieved carbon neutrality in all our mining operations, leading the industry in sustainable practices.",
-      image: "/images/sustainability.jpg",
-    },
-  ]
-
-  const teamMembers = [
-    {
-      name: "Emma Stone",
-      role: "Chief Gemologist",
-      image: "/images/emma-stone.jpg",
-      bio: "With over 20 years of experience, Emma leads our gemstone selection and quality control processes.",
-    },
-    {
-      name: "Michael Chang",
-      role: "Mining Operations Manager",
-      image: "/images/michael-chang.jpg",
-      bio: "Michael ensures our mining practices are efficient, safe, and environmentally responsible.",
-    },
-    {
-      name: "Sophia Rodriguez",
-      role: "Sustainability Director",
-      image: "/images/sophia-rodriguez.jpg",
-      bio: "Sophia spearheads our initiatives in ethical sourcing and community development.",
-    },
-    {
-      name: "David Okafor",
-      role: "Master Craftsman",
-      image: "/images/david-okafor.jpg",
-      bio: "David's expertise in gemstone cutting and polishing brings out the true beauty in every stone.",
-    },
-  ]
-
-  return (
-    <div className="bg-gray-50">
-      {/* Hero Section */}
-      <section className="relative h-[80vh] flex items-center justify-center text-white">
-        <Image src="/images/hero-mine.jpg" alt="Gemstone mine" fill style={{ objectFit: "cover" }} priority />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
-          <motion.h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4" {...fadeIn}>
-            Our Story: Crafting Beauty from the Earth
-          </motion.h1>
-          <motion.p className="text-lg md:text-xl lg:text-2xl mb-8" {...fadeIn} transition={{ delay: 0.2 }}>
-            Discover the Passion Behind Our Gemstones
-          </motion.p>
-          <motion.div {...fadeIn} transition={{ delay: 0.4 }}>
-            <Link
-              href="/catalog"
-              className="bg-white text-gray-900 px-8 py-3 rounded-full text-lg font-bold hover:bg-gray-100 transition-colors inline-flex items-center"
-            >
-              Explore Our Collection
-              <ArrowRight className="ml-2" />
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Company History Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <motion.h2
-            className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            Our Journey Through Time
-          </motion.h2>
-          {historyEvents.map((event, index) => (
-            <HistoryEvent key={event.year} {...event} isReversed={index % 2 !== 0} />
-          ))}
-        </div>
-      </section>
-
-      {/* Mission and Vision Section */}
-      <section className="py-20 bg-gray-100">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <motion.div
-              className="space-y-6"
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <Globe className="w-16 h-16 text-gray-700" />
-              <h3 className="text-2xl md:text-3xl font-serif font-bold">Our Mission</h3>
-              <p className="text-lg text-gray-600">
-                Our mission is to provide ethically sourced, high-quality gemstones to clients worldwide, while
-                preserving the beauty of our planet.
-              </p>
-            </motion.div>
-            <motion.div
-              className="space-y-6"
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <Users className="w-16 h-16 text-gray-700" />
-              <h3 className="text-2xl md:text-3xl font-serif font-bold">Our Vision</h3>
-              <p className="text-lg text-gray-600">
-                Our vision is to become the global leader in sustainable gemstone mining and trading, setting new
-                standards for quality and ethics.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Team Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <motion.h2
-            className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            Meet the Experts Behind the Gemstones
-          </motion.h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {teamMembers.map((member, index) => (
-              <motion.div
-                key={member.name}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <TeamMember {...member} />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Ethical Practices Section */}
-      <section className="py-20 bg-gray-100">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <motion.div
-              className="space-y-6"
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold">
-                Ethical Mining, Sustainable Future
-              </h2>
-              <p className="text-lg text-gray-600">
-                At Gemstone Co., we are committed to ethical mining practices, sustainability, and community
-                development. Our approach ensures that every gemstone we source not only meets the highest quality
-                standards but also contributes positively to the communities and environments where we operate.
-              </p>
-              <div className="grid grid-cols-2 gap-4">
-                {["No Child Labor", "Eco-Friendly Techniques", "Fair Wages", "Community Support"].map(
-                  (practice, index) => (
-                    <motion.div
-                      key={practice}
-                      className="flex items-center space-x-2"
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.4, delay: index * 0.1 }}
+    return (
+        <div className="bg-gray-50">
+            {/* Hero Section */}
+            <section className="relative h-[80vh] flex items-center justify-center text-white">
+                <Image
+                    src="/about.png"
+                    alt="Gemstone mine"
+                    fill
+                    style={{ objectFit: "cover" }}
+                    priority
+                />
+                <div className="absolute inset-0 bg-black/40" />
+                <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
+                    <motion.h1
+                        className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4"
+                        {...fadeIn}
                     >
-                      <Leaf className="text-gray-700" />
-                      <span className="text-gray-600">{practice}</span>
+                        About Amadoniyas Gem and Mineral World
+                    </motion.h1>
+                    <motion.p
+                        className="text-lg md:text-xl lg:text-2xl mb-8"
+                        {...fadeIn}
+                        transition={{ delay: 0.2 }}
+                    >
+                        Showcasing Ethiopia&apos;s and Africa&apos;s Gemstones,
+                        Minerals, and Energy Resources
+                    </motion.p>
+                    <motion.div {...fadeIn} transition={{ delay: 0.4 }}>
+                        <Link
+                            href="/catalog"
+                            className="bg-white text-gray-900 px-8 py-3 rounded-full text-lg font-bold hover:bg-gray-100 transition-colors inline-flex items-center"
+                        >
+                            Explore Our Collection
+                            <ArrowRight className="ml-2" />
+                        </Link>
                     </motion.div>
-                  ),
-                )}
-              </div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <Image
-                src="/images/ethical-mining.jpg"
-                alt="Ethical Mining Practices"
-                width={600}
-                height={400}
-                className="rounded-lg shadow-md w-full"
-              />
-            </motion.div>
-          </div>
-        </div>
-      </section>
+                </div>
+            </section>
 
-      {/* Call-to-Action (CTA) Section */}
-      <section className="relative py-20 text-white">
-        <Image src="/images/cta-background.jpg" alt="Gemstones" fill style={{ objectFit: "cover" }} />
-        <div className="absolute inset-0 bg-black/60" />
-        <div className="relative z-10 container mx-auto px-4 text-center">
-          <motion.h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold mb-4" {...fadeIn}>
-            Join Us in Our Journey
-          </motion.h2>
-          <motion.p className="text-lg md:text-xl mb-8" {...fadeIn} transition={{ delay: 0.2 }}>
-            Explore Our Collection or Partner with Us Today
-          </motion.p>
-          <motion.div
-            className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4"
-            {...fadeIn}
-            transition={{ delay: 0.4 }}
-          >
-            <Link
-              href="/catalog"
-              className="bg-white text-gray-900 px-8 py-3 rounded-full text-lg font-bold hover:bg-gray-100 transition-colors inline-flex items-center justify-center"
-            >
-              Shop Gemstones
-              <ArrowRight className="ml-2" />
-            </Link>
-            <Link
-              href="/contact"
-              className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full text-lg font-bold hover:bg-white hover:text-gray-900 transition-colors inline-flex items-center justify-center"
-            >
-              Contact Us
-              <ArrowRight className="ml-2" />
-            </Link>
-          </motion.div>
+            {/* About Us Section */}
+            <section className="py-20 bg-white">
+                <div className="container mx-auto px-4">
+                    <motion.div
+                        className="max-w-4xl mx-auto"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                    >
+                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-center mb-8">
+                            Amadoniyas Gem and Mineral World
+                        </h2>
+                        <p className="text-lg text-gray-700 mb-4 text-center">
+                            <strong>Founder & CEO:</strong> Eyosafit
+                        </p>
+                        <p className="text-lg text-gray-600 mb-8">
+                            Welcome to Amadoniyas Gem and Mineral World, a
+                            visionary platform dedicated to showcasing the
+                            unparalleled beauty and richness of Ethiopia&apos;s
+                            and Africa&apos;s gemstones, minerals, and energy
+                            resources to the global market. Founded by Eyosafit,
+                            our mission is to bridge the gap between
+                            Africa&apos;s hidden treasures and the world, while
+                            empowering communities and fostering sustainable
+                            development across the continent.
+                        </p>
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* Our Emergence Section */}
+            <section className="py-20 bg-gray-100">
+                <div className="container mx-auto px-4">
+                    <motion.div
+                        className="max-w-4xl mx-auto"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                    >
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-8">
+                            Our Emergence
+                        </h2>
+                        <p className="text-lg text-gray-600 mb-6">
+                            Africa is a land of immense natural wealth, yet its
+                            gemstones, minerals, and energy resources have often
+                            remained underappreciated and underexplored.
+                            Amadoniyas Gem and Mineral World emerged from a deep
+                            passion for Africa&apos;s geological wonders and a
+                            commitment to unlocking their potential. Ethiopia,
+                            with its world-class opals, emeralds, sapphires,
+                            gold, and untapped energy minerals, became the
+                            cornerstone of this journey.
+                        </p>
+                        <p className="text-lg text-gray-600 mb-6">
+                            From the vibrant play-of-color in Welo opals to the
+                            rich gold deposits of Lega Dembi and the vast energy
+                            potential of the Danakil Depression, we recognized
+                            an opportunity to bring Africa&apos;s treasures to
+                            the forefront of the global stage.
+                        </p>
+                        <p className="text-lg text-gray-600">
+                            Amadoniyas Gem and Mineral World was born out of a
+                            profound understanding of Ethiopia&apos;s
+                            unbelievable natural wealth—its breathtaking
+                            gemstones, vast mineral deposits, and untapped
+                            energy resources. From the vibrant play-of-color in
+                            Welo opals to the rich gold deposits of Lega Dembi,
+                            and the geothermal and potash potential of the
+                            Danakil Depression, Ethiopia&apos;s geological
+                            treasures inspired a deep vision: to transform these
+                            resources into a source of hope and prosperity for
+                            Africa.
+                        </p>
+                        <p className="text-lg text-gray-600 mt-6">
+                            We recognized that Africa&apos;s gemstones,
+                            minerals, and energy resources are not just
+                            materials—they are opportunities to uplift
+                            communities, drive economic growth, and showcase the
+                            continent&apos;s potential to the world. This vision
+                            became the foundation of Amadoniyas Gem and Mineral
+                            World, a platform that celebrates Africa&apos;s
+                            richness while creating a sustainable future for its
+                            people.
+                        </p>
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* Vision Section */}
+            <section className="py-20 bg-white">
+                <div className="container mx-auto px-4">
+                    <motion.div
+                        className="max-w-4xl mx-auto"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                    >
+                        <Globe className="w-16 h-16 text-gray-700 mb-6" />
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">
+                            Our Vision
+                        </h2>
+                        <p className="text-lg text-gray-600">
+                            We envision a world where Africa&apos;s gemstones,
+                            minerals, and energy resources are celebrated not
+                            only for their beauty and utility but also for their
+                            role in transforming lives and economies. Amadoniyas
+                            Gem and Mineral World aims to be a symbol of hope,
+                            showcasing Africa&apos;s potential to the world
+                            while creating sustainable opportunities for local
+                            communities. We believe that Africa&apos;s natural
+                            resources are not just commodities but catalysts for
+                            growth, innovation, and unity.
+                        </p>
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* Goal Section */}
+            <section className="py-20 bg-gray-100">
+                <div className="container mx-auto px-4">
+                    <motion.div
+                        className="max-w-4xl mx-auto"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                    >
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">
+                            Our Goal
+                        </h2>
+                        <p className="text-lg text-gray-600 mb-6">
+                            Our goal is to establish Amadoniyas Gem and Mineral
+                            World as the premier destination for ethically
+                            sourced, high-quality gemstones, minerals, and
+                            energy resources from Ethiopia and across Africa. We
+                            are committed to:
+                        </p>
+                        <ul className="space-y-4 text-lg text-gray-600 list-disc list-inside">
+                            <li>
+                                <strong>
+                                    Promoting Africa&apos;s Richness:
+                                </strong>{" "}
+                                Highlighting the diversity and uniqueness of
+                                African gemstones, minerals, and energy
+                                resources to the international market.
+                            </li>
+                            <li>
+                                <strong>Empowering Communities:</strong>{" "}
+                                Creating fair-trade opportunities that support
+                                local miners, artisans, and their families.
+                            </li>
+                            <li>
+                                <strong>Sustainability:</strong> Ensuring
+                                responsible mining and energy extraction
+                                practices that protect the environment and
+                                preserve Africa&apos;s natural heritage for
+                                future generations.
+                            </li>
+                            <li>
+                                <strong>Global Connection:</strong> Building a
+                                bridge between Africa and the world, fostering
+                                cultural exchange and economic growth.
+                            </li>
+                        </ul>
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* Why Choose Us Section */}
+            <section className="py-20 bg-white">
+                <div className="container mx-auto px-4">
+                    <motion.h2
+                        className="text-3xl md:text-4xl font-serif font-bold text-center mb-12"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                    >
+                        Why Choose Us?
+                    </motion.h2>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                        {[
+                            {
+                                title: "Authenticity",
+                                description:
+                                    "Every gemstone, mineral, and energy resource we offer is sourced directly from Africa, ensuring authenticity and traceability.",
+                                icon: Diamond,
+                            },
+                            {
+                                title: "Quality",
+                                description:
+                                    "We pride ourselves on delivering only the finest quality, handpicked by experts.",
+                                icon: Award,
+                            },
+                            {
+                                title: "Ethics",
+                                description:
+                                    "Our commitment to fair trade and sustainability is at the heart of everything we do.",
+                                icon: Leaf,
+                            },
+                            {
+                                title: "Hope",
+                                description:
+                                    "By supporting Amadoniyas Gem and Mineral World, you are contributing to a brighter future for Africa and its people.",
+                                icon: Users,
+                            },
+                        ].map((item, index) => (
+                            <motion.div
+                                key={item.title}
+                                className="text-center"
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{
+                                    duration: 0.6,
+                                    delay: index * 0.1,
+                                }}
+                            >
+                                <item.icon className="w-16 h-16 mx-auto mb-4 text-gray-700" />
+                                <h3 className="text-xl font-bold mb-2">
+                                    {item.title}
+                                </h3>
+                                <p className="text-gray-600">
+                                    {item.description}
+                                </p>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Energy Minerals Section */}
+            <section className="py-20 bg-gray-100">
+                <div className="container mx-auto px-4">
+                    <motion.div
+                        className="max-w-4xl mx-auto"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                    >
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">
+                            Energy Minerals: Powering Africa&apos;s Future
+                        </h2>
+                        <p className="text-lg text-gray-600">
+                            Africa&apos;s energy minerals, including coal, oil,
+                            natural gas, and rare earth elements, hold the key
+                            to the continent&apos;s sustainable development.
+                            Ethiopia&apos;s Danakil Depression, for instance, is
+                            home to vast potash reserves and geothermal energy
+                            potential, while other regions offer untapped oil
+                            and gas resources. At Amadoniyas Gem and Mineral
+                            World, we are committed to promoting these energy
+                            resources responsibly, ensuring they contribute to
+                            Africa&apos;s energy security and economic growth
+                            while minimizing environmental impact.
+                        </p>
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* Founder Message Section */}
+            <section className="py-20 bg-white">
+                <div className="container mx-auto px-4">
+                    <motion.div
+                        className="max-w-4xl mx-auto bg-gray-50 p-8 md:p-12 rounded-lg shadow-md"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                    >
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">
+                            A Message from the Founder
+                        </h2>
+                        <blockquote className="text-lg text-gray-700 italic mb-4">
+                            &quot;The journey of Amadoniyas Gem and Mineral
+                            World began with a simple yet profound realization:
+                            Ethiopia and Africa are home to some of the most
+                            unbelievable natural resources on Earth. From the
+                            dazzling opals of Welo to the golden riches of Lega
+                            Dembi and the energy potential of the Danakil
+                            Depression, I saw not just materials but a vision of
+                            hope for Africa.
+                        </blockquote>
+                        <blockquote className="text-lg text-gray-700 italic mb-6">
+                            At Amadoniyas Gem and Mineral World, we are not just
+                            selling stones or energy; we are sharing a piece of
+                            Africa&apos;s soul with the world. Together, we can
+                            unlock the continent&apos;s potential and create a
+                            legacy of prosperity for generations to come.&quot;
+                        </blockquote>
+                        <p className="text-lg font-bold text-gray-800">
+                            – Eyosafit, Founder & CEO
+                        </p>
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* Join Us Section */}
+            <section className="relative py-20 text-white">
+                <Image
+                    src="/images/cta-background.jpg"
+                    alt="Gemstones"
+                    fill
+                    style={{ objectFit: "cover" }}
+                />
+                <div className="absolute inset-0 bg-black/60" />
+                <div className="relative z-10 container mx-auto px-4 text-center">
+                    <motion.h2
+                        className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold mb-4"
+                        {...fadeIn}
+                    >
+                        Join Us on This Journey
+                    </motion.h2>
+                    <motion.p
+                        className="text-lg md:text-xl mb-8 max-w-3xl mx-auto"
+                        {...fadeIn}
+                        transition={{ delay: 0.2 }}
+                    >
+                        Explore our collection, learn about Africa&apos;s
+                        geological and energy wonders, and become part of a
+                        movement that celebrates beauty, sustainability, and
+                        hope. Amadoniyas Gem and Mineral World is more than a
+                        business—it&apos;s a vision for a brighter Africa and a
+                        connected world.
+                    </motion.p>
+                    <motion.p
+                        className="text-lg md:text-xl mb-8 max-w-3xl mx-auto"
+                        {...fadeIn}
+                        transition={{ delay: 0.3 }}
+                    >
+                        Welcome to the world of Amadoniyas, where every stone
+                        tells a story, every resource powers progress, and every
+                        purchase makes a difference.
+                    </motion.p>
+                    <motion.div
+                        className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4"
+                        {...fadeIn}
+                        transition={{ delay: 0.4 }}
+                    >
+                        <Link
+                            href="/catalog"
+                            className="bg-white text-gray-900 px-8 py-3 rounded-full text-lg font-bold hover:bg-gray-100 transition-colors inline-flex items-center justify-center"
+                        >
+                            Explore Our Collection
+                            <ArrowRight className="ml-2" />
+                        </Link>
+                        <Link
+                            href="/contact"
+                            className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full text-lg font-bold hover:bg-white hover:text-gray-900 transition-colors inline-flex items-center justify-center"
+                        >
+                            Contact Us
+                            <ArrowRight className="ml-2" />
+                        </Link>
+                    </motion.div>
+                </div>
+            </section>
         </div>
-      </section>
-    </div>
-  )
+    );
 }
-
