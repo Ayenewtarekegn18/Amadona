@@ -13,11 +13,11 @@ const fadeIn = {
 
 export default function AboutUs() {
     return (
-        <div className="bg-gray-50">
+        <div className="bg-app text-app">
             {/* Hero Section */}
             <section className="relative h-[80vh] flex items-center justify-center text-white">
                 <Image
-                    src="/about.png"
+                    src="/about.jpg"
                     alt="Gemstone mine"
                     fill
                     style={{ objectFit: "cover" }}
@@ -52,7 +52,7 @@ export default function AboutUs() {
             </section>
 
             {/* About Us Section */}
-            <section className="py-20 bg-white">
+            <section className="py-20 bg-surface">
                 <div className="container mx-auto px-4">
                     <motion.div
                         className="max-w-4xl mx-auto"
@@ -64,10 +64,10 @@ export default function AboutUs() {
                         <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-center mb-8">
                             Amadoniyas Gem and Mineral World
                         </h2>
-                        <p className="text-lg text-gray-700 mb-4 text-center">
+                        <p className="text-lg text-app mb-4 text-center">
                             <strong>Founder & CEO:</strong> Eyosafit
                         </p>
-                        <p className="text-lg text-gray-600 mb-8">
+                        <p className="text-lg text-muted mb-8">
                             Welcome to Amadoniyas Gem and Mineral World, a
                             visionary platform dedicated to showcasing the
                             unparalleled beauty and richness of Ethiopia&apos;s
@@ -83,7 +83,7 @@ export default function AboutUs() {
             </section>
 
             {/* Our Emergence Section */}
-            <section className="py-20 bg-gray-100">
+            <section className="py-20 bg-surface-alt">
                 <div className="container mx-auto px-4">
                     <motion.div
                         className="max-w-4xl mx-auto"
@@ -95,7 +95,7 @@ export default function AboutUs() {
                         <h2 className="text-3xl md:text-4xl font-serif font-bold mb-8">
                             Our Emergence
                         </h2>
-                        <p className="text-lg text-gray-600 mb-6">
+                        <p className="text-lg text-muted mb-6">
                             Africa is a land of immense natural wealth, yet its
                             gemstones, minerals, and energy resources have often
                             remained underappreciated and underexplored.
@@ -106,14 +106,14 @@ export default function AboutUs() {
                             gold, and untapped energy minerals, became the
                             cornerstone of this journey.
                         </p>
-                        <p className="text-lg text-gray-600 mb-6">
+                        <p className="text-lg text-muted mb-6">
                             From the vibrant play-of-color in Welo opals to the
                             rich gold deposits of Lega Dembi and the vast energy
                             potential of the Danakil Depression, we recognized
                             an opportunity to bring Africa&apos;s treasures to
                             the forefront of the global stage.
                         </p>
-                        <p className="text-lg text-gray-600">
+                        <p className="text-lg text-muted">
                             Amadoniyas Gem and Mineral World was born out of a
                             profound understanding of Ethiopia&apos;s
                             unbelievable natural wealth—its breathtaking
@@ -126,7 +126,7 @@ export default function AboutUs() {
                             resources into a source of hope and prosperity for
                             Africa.
                         </p>
-                        <p className="text-lg text-gray-600 mt-6">
+                        <p className="text-lg text-muted mt-6">
                             We recognized that Africa&apos;s gemstones,
                             minerals, and energy resources are not just
                             materials—they are opportunities to uplift
@@ -142,7 +142,7 @@ export default function AboutUs() {
             </section>
 
             {/* Vision Section */}
-            <section className="py-20 bg-white">
+            <section className="py-20 bg-surface">
                 <div className="container mx-auto px-4">
                     <motion.div
                         className="max-w-4xl mx-auto"
@@ -155,7 +155,7 @@ export default function AboutUs() {
                         <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">
                             Our Vision
                         </h2>
-                        <p className="text-lg text-gray-600">
+                        <p className="text-lg text-muted">
                             We envision a world where Africa&apos;s gemstones,
                             minerals, and energy resources are celebrated not
                             only for their beauty and utility but also for their
@@ -172,7 +172,7 @@ export default function AboutUs() {
             </section>
 
             {/* Goal Section */}
-            <section className="py-20 bg-gray-100">
+            <section className="py-20 bg-surface-alt">
                 <div className="container mx-auto px-4">
                     <motion.div
                         className="max-w-4xl mx-auto"
@@ -184,14 +184,14 @@ export default function AboutUs() {
                         <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">
                             Our Goal
                         </h2>
-                        <p className="text-lg text-gray-600 mb-6">
+                        <p className="text-lg text-muted mb-6">
                             Our goal is to establish Amadoniyas Gem and Mineral
                             World as the premier destination for ethically
                             sourced, high-quality gemstones, minerals, and
                             energy resources from Ethiopia and across Africa. We
                             are committed to:
                         </p>
-                        <ul className="space-y-4 text-lg text-gray-600 list-disc list-inside">
+                        <ul className="space-y-4 text-lg text-muted list-disc list-inside">
                             <li>
                                 <strong>
                                     Promoting Africa&apos;s Richness:
@@ -223,7 +223,7 @@ export default function AboutUs() {
             </section>
 
             {/* Why Choose Us Section */}
-            <section className="py-20 bg-white">
+            <section className="py-20 bg-surface">
                 <div className="container mx-auto px-4">
                     <motion.h2
                         className="text-3xl md:text-4xl font-serif font-bold text-center mb-12"
@@ -276,7 +276,7 @@ export default function AboutUs() {
                                 <h3 className="text-xl font-bold mb-2">
                                     {item.title}
                                 </h3>
-                                <p className="text-gray-600">
+                                <p className="text-muted">
                                     {item.description}
                                 </p>
                             </motion.div>
@@ -286,7 +286,7 @@ export default function AboutUs() {
             </section>
 
             {/* Energy Minerals Section */}
-            <section className="py-20 bg-gray-100">
+            <section className="py-20 bg-surface-alt">
                 <div className="container mx-auto px-4">
                     <motion.div
                         className="max-w-4xl mx-auto"
@@ -298,7 +298,7 @@ export default function AboutUs() {
                         <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">
                             Energy Minerals: Powering Africa&apos;s Future
                         </h2>
-                        <p className="text-lg text-gray-600">
+                        <p className="text-lg text-muted">
                             Africa&apos;s energy minerals, including coal, oil,
                             natural gas, and rare earth elements, hold the key
                             to the continent&apos;s sustainable development.
@@ -316,10 +316,10 @@ export default function AboutUs() {
             </section>
 
             {/* Founder Message Section */}
-            <section className="py-20 bg-white">
+            <section className="py-20 bg-surface">
                 <div className="container mx-auto px-4">
                     <motion.div
-                        className="max-w-4xl mx-auto bg-gray-50 p-8 md:p-12 rounded-lg shadow-md"
+                        className="max-w-4xl mx-auto bg-accent-foreground p-8 md:p-12 rounded-lg shadow-md"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
@@ -328,7 +328,7 @@ export default function AboutUs() {
                         <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">
                             A Message from the Founder
                         </h2>
-                        <blockquote className="text-lg text-gray-700 italic mb-4">
+                        <blockquote className="text-lg text-muted italic mb-4">
                             &quot;The journey of Amadoniyas Gem and Mineral
                             World began with a simple yet profound realization:
                             Ethiopia and Africa are home to some of the most
@@ -338,14 +338,14 @@ export default function AboutUs() {
                             Depression, I saw not just materials but a vision of
                             hope for Africa.
                         </blockquote>
-                        <blockquote className="text-lg text-gray-700 italic mb-6">
+                        <blockquote className="text-lg text-muted italic mb-6">
                             At Amadoniyas Gem and Mineral World, we are not just
                             selling stones or energy; we are sharing a piece of
                             Africa&apos;s soul with the world. Together, we can
                             unlock the continent&apos;s potential and create a
                             legacy of prosperity for generations to come.&quot;
                         </blockquote>
-                        <p className="text-lg font-bold text-gray-800">
+                        <p className="text-lg font-bold text-app">
                             – Eyosafit, Founder & CEO
                         </p>
                     </motion.div>
@@ -355,7 +355,7 @@ export default function AboutUs() {
             {/* Join Us Section */}
             <section className="relative py-20 text-white">
                 <Image
-                    src="/images/cta-background.jpg"
+                    src="/contact.jpg"
                     alt="Gemstones"
                     fill
                     style={{ objectFit: "cover" }}

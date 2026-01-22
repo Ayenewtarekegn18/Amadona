@@ -5,117 +5,26 @@ import Image from "next/image"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { Search, X } from "lucide-react"
+import { Gemstone, gemstones } from "../../lib/gemstoneData"
 
 
-interface Gemstone {
-  id: number
-  name: string
-  type: string
-  color: string
-  size: string
-  price: number
-  origin: string
-  image: string
-  description: string
-  certification: string
-}
-
-const gemstones: Gemstone[] = [
-  {
-    id: 1,
-    name: "Colombian Emerald",
-    type: "Emerald",
-    color: "Green",
-    size: "2.5 carats",
-    price: 15000,
-    origin: "Colombia",
-    image: "/images/colombian-emerald.jpg",
-    description:
-      "This exquisite Colombian emerald boasts a vibrant green hue and exceptional clarity. Its origin in the renowned mines of Colombia ensures premium quality and value.",
-    certification: "GIA Certified",
-  },
-  {
-    id: 2,
-    name: "Burmese Ruby",
-    type: "Ruby",
-    color: "Red",
-    size: "1.8 carats",
-    price: 22000,
-    origin: "Myanmar",
-    image: "/images/burmese-ruby.jpg",
-    description:
-      "This stunning Burmese ruby exhibits a deep red color known as 'pigeon's blood'. Its origin in the famed mines of Myanmar guarantees exceptional quality and rarity.",
-    certification: "AGL Certified",
-  },
-  {
-    id: 3,
-    name: "Ceylon Sapphire",
-    type: "Sapphire",
-    color: "Blue",
-    size: "3.2 carats",
-    price: 18000,
-    origin: "Sri Lanka",
-    image: "/images/ceylon-sapphire.jpg",
-    description:
-      "This magnificent Ceylon sapphire showcases a rich blue hue reminiscent of the deep ocean. Its Sri Lankan origin ensures superior quality and a unique character.",
-    certification: "Gubelin Certified",
-  },
-  {
-    id: 4,
-    name: "Paraiba Tourmaline",
-    type: "Tourmaline",
-    color: "Neon Blue",
-    size: "1.5 carats",
-    price: 30000,
-    origin: "Brazil",
-    image: "/images/paraiba-tourmaline.jpg",
-    description:
-      "This rare Paraiba tourmaline features an electric blue color that's highly sought after. Its Brazilian origin and unique neon hue make it a true collector's item.",
-    certification: "GRS Certified",
-  },
-  {
-    id: 5,
-    name: "Tanzanite",
-    type: "Zoisite",
-    color: "Blue-Violet",
-    size: "4.0 carats",
-    price: 12000,
-    origin: "Tanzania",
-    image: "/images/tanzanite.jpg",
-    description:
-      "This captivating tanzanite displays a mesmerizing blue-violet color. Its Tanzanian origin and trichroic nature make it a unique and valuable gemstone.",
-    certification: "AGTA Certified",
-  },
-  {
-    id: 6,
-    name: "Pink Diamond",
-    type: "Diamond",
-    color: "Pink",
-    size: "0.8 carats",
-    price: 200000,
-    origin: "Australia",
-    image: "/images/pink-diamond.jpg",
-    description:
-      "This rare pink diamond exhibits a soft, romantic hue. Its Australian origin and natural pink color make it an extraordinary and highly valuable gem.",
-    certification: "GIA Certified",
-  },
-]
+// Gemstones are now imported from lib/gemstoneData
 
 const collections = [
   {
     name: "Rare Finds",
     description: "Discover our collection of exceptionally rare and unique gemstones.",
-    image: "/images/rare-finds.jpg",
+    image: "/gemImages/Tourmaline/4e7bde4743e896b2b2a2b890acccd5be.jpg",
   },
   {
     name: "Investment-Grade Gemstones",
     description: "Explore premium gemstones perfect for long-term investment.",
-    image: "/images/investment-grade.jpg",
+    image: "/gemImages/Emerald/561ba03d5357a6c337475aa36e70c849.jpg",
   },
   {
     name: "Birthstone Collection",
     description: "Find the perfect gemstone to celebrate your birth month.",
-    image: "/images/birthstone-collection.jpg",
+    image: "/gemImages/Sapphire/8dd77d30d655f3e86c77e872ecfee432.jpg",
   },
 ]
 
@@ -124,19 +33,19 @@ const testimonials = [
     name: "Sarah Johnson",
     location: "New York, USA",
     quote: "The quality and beauty of the emerald I purchased exceeded my expectations. Exceptional service!",
-    image: "/images/sarah-johnson.jpg",
+    image: "/gemImages/Opal/90d3744a4f694cd509d44d7f5fafa15e.jpg",
   },
   {
     name: "Michael Chen",
     location: "Hong Kong",
     quote: "As a collector, I'm impressed by the rare gemstones and expert knowledge this company offers.",
-    image: "/images/michael-chen.jpg",
+    image: "/gemImages/Ruby/d692f610ecbf8d06fdbf3bef214487c4.jpg",
   },
   {
     name: "Emma Rodriguez",
     location: "London, UK",
     quote: "The gemstone education resources helped me make an informed decision. I'm thrilled with my purchase!",
-    image: "/images/emma-rodriguez.jpg",
+    image: "/gemImages/Granite/d3b2c6d87accc13c0cca7627b34d5d0c.jpg",
   },
 ]
 
@@ -145,9 +54,6 @@ export default function CatalogPage() {
   const [filters, setFilters] = useState({
     type: "",
     color: "",
-    size: "",
-    price: "",
-    origin: "",
   })
   const [searchTerm, setSearchTerm] = useState("")
   const [filteredGemstones, setFilteredGemstones] = useState(gemstones)
@@ -159,32 +65,25 @@ export default function CatalogPage() {
         gemstone.type.toLowerCase().includes(searchTerm.toLowerCase())
       const matchesType = filters.type === "" || gemstone.type === filters.type
       const matchesColor = filters.color === "" || gemstone.color === filters.color
-      const matchesSize = filters.size === "" || gemstone.size === filters.size
-      const matchesPrice =
-        filters.price === "" ||
-        (filters.price === "0-5000" && gemstone.price <= 5000) ||
-        (filters.price === "5000-10000" && gemstone.price > 5000 && gemstone.price <= 10000) ||
-        (filters.price === "10000+" && gemstone.price > 10000)
-      const matchesOrigin = filters.origin === "" || gemstone.origin === filters.origin
 
-      return matchesSearch && matchesType && matchesColor && matchesSize && matchesPrice && matchesOrigin
+      return matchesSearch && matchesType && matchesColor
     })
 
     setFilteredGemstones(filtered)
   }, [filters, searchTerm])
 
   return (
-    <div className="bg-gray-50">
+    <div className="bg-app text-app">
       {/* Search and Filter Bar */}
-      <section className="bg-white shadow-md py-6 sticky top-0 z-20">
+      <section className="bg-surface shadow-elevated py-6 sticky top-0 z-20 border-b border-subtle backdrop-blur">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex-grow max-w-md">
+            <div className="grow max-w-md">
               <div className="relative">
                 <input
                   type="text"
                   placeholder="Search gemstones..."
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  className="w-full pl-10 pr-4 py-2 border border-subtle rounded-md focus:outline-none focus:ring-2 focus:ring-purple-700 bg-card text-app"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -192,11 +91,11 @@ export default function CatalogPage() {
               </div>
             </div>
             <div className="flex flex-wrap gap-4">
-              <select
-                className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                value={filters.type}
-                onChange={(e) => setFilters({ ...filters, type: e.target.value })}
-              >
+                <select
+                  className="px-4 py-2 border border-subtle rounded-md focus:outline-none focus:ring-2 focus:ring-purple-700 bg-card text-app"
+                  value={filters.type}
+                  onChange={(e) => setFilters({ ...filters, type: e.target.value })}
+                >
                 <option value="">All Types</option>
                 <option value="Emerald">Emerald</option>
                 <option value="Ruby">Ruby</option>
@@ -204,40 +103,17 @@ export default function CatalogPage() {
                 <option value="Diamond">Diamond</option>
                 <option value="Tourmaline">Tourmaline</option>
               </select>
-              <select
-                className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                value={filters.color}
-                onChange={(e) => setFilters({ ...filters, color: e.target.value })}
-              >
+                <select
+                  className="px-4 py-2 border border-subtle rounded-md focus:outline-none focus:ring-2 focus:ring-purple-700 bg-card text-app"
+                  value={filters.color}
+                  onChange={(e) => setFilters({ ...filters, color: e.target.value })}
+                >
                 <option value="">All Colors</option>
                 <option value="Green">Green</option>
                 <option value="Red">Red</option>
                 <option value="Blue">Blue</option>
                 <option value="Pink">Pink</option>
                 <option value="Neon Blue">Neon Blue</option>
-              </select>
-              <select
-                className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                value={filters.price}
-                onChange={(e) => setFilters({ ...filters, price: e.target.value })}
-              >
-                <option value="">All Prices</option>
-                <option value="0-5000">$0 - $5,000</option>
-                <option value="5000-10000">$5,000 - $10,000</option>
-                <option value="10000+">$10,000+</option>
-              </select>
-              <select
-                className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                value={filters.origin}
-                onChange={(e) => setFilters({ ...filters, origin: e.target.value })}
-              >
-                <option value="">All Origins</option>
-                <option value="Colombia">Colombia</option>
-                <option value="Myanmar">Myanmar</option>
-                <option value="Sri Lanka">Sri Lanka</option>
-                <option value="Brazil">Brazil</option>
-                <option value="Tanzania">Tanzania</option>
-                <option value="Australia">Australia</option>
               </select>
             </div>
           </div>
@@ -252,7 +128,7 @@ export default function CatalogPage() {
             {filteredGemstones.map((gemstone) => (
               <motion.div
                 key={gemstone.id}
-                className="bg-white rounded-lg shadow-md overflow-hidden"
+                className="bg-card rounded-2xl shadow-elevated overflow-hidden border border-subtle"
                 whileHover={{ y: -5 }}
                 transition={{ duration: 0.3 }}
               >
@@ -266,13 +142,12 @@ export default function CatalogPage() {
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-serif font-bold mb-2">{gemstone.name}</h3>
-                  <p className="text-gray-600 mb-4">
-                    {gemstone.size} | {gemstone.origin}
+                  <p className="text-muted mb-4">
+                    {gemstone.size} | {gemstone.color}
                   </p>
-                  <p className="text-2xl font-bold text-emerald-600 mb-4">${gemstone.price.toLocaleString()}</p>
                   <button
                     onClick={() => setSelectedGemstone(gemstone)}
-                    className="w-full bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition-colors"
+                    className="w-full bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-900 transition-colors"
                   >
                     View Details
                   </button>
@@ -284,14 +159,14 @@ export default function CatalogPage() {
       </section>
 
       {/* Featured Collections */}
-      <section className="py-16 bg-gray-100">
+      <section className="py-16 bg-surface-alt">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-center mb-12">Featured Collections</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {collections.map((collection, index) => (
               <motion.div
                 key={collection.name}
-                className="relative h-80 rounded-lg overflow-hidden"
+                className="relative h-80 rounded-2xl overflow-hidden border border-subtle shadow-elevated"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
@@ -304,7 +179,7 @@ export default function CatalogPage() {
                 />
                 <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white p-6">
                   <h3 className="text-2xl font-serif font-bold mb-4">{collection.name}</h3>
-                  <p className="text-center mb-6">{collection.description}</p>
+                  <p className="text-center mb-6 text-sm md:text-base">{collection.description}</p>
                   <Link
                     href="#"
                     className="bg-gold text-gray-900 px-6 py-2 rounded-full hover:bg-gold/90 transition-colors"
@@ -319,7 +194,7 @@ export default function CatalogPage() {
       </section>
 
       {/* Gemstone Education */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-surface">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-center mb-12">Gemstone Guide</h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -329,10 +204,10 @@ export default function CatalogPage() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <div className="bg-emerald-100 rounded-full p-6 inline-block mb-4">
+              <div className="bg-purple-100 rounded-full p-6 inline-block mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-12 w-12 text-emerald-600"
+                  className="h-12 w-12 text-purple-800"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -341,7 +216,7 @@ export default function CatalogPage() {
                 </svg>
               </div>
               <h3 className="text-xl font-serif font-bold mb-2">Types of Gemstones</h3>
-              <p className="text-gray-600">
+              <p className="text-muted">
                 Learn about different gemstone varieties and their unique characteristics.
               </p>
             </motion.div>
@@ -351,10 +226,10 @@ export default function CatalogPage() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <div className="bg-emerald-100 rounded-full p-6 inline-block mb-4">
+              <div className="bg-purple-100 rounded-full p-6 inline-block mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-12 w-12 text-emerald-600"
+                  className="h-12 w-12 text-purple-800"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -368,7 +243,7 @@ export default function CatalogPage() {
                 </svg>
               </div>
               <h3 className="text-xl font-serif font-bold mb-2">Choosing the Right Gemstone</h3>
-              <p className="text-gray-600">
+              <p className="text-muted">
                 Tips for selecting the perfect gemstone for jewelry, investment, or gifts.
               </p>
             </motion.div>
@@ -378,10 +253,10 @@ export default function CatalogPage() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              <div className="bg-emerald-100 rounded-full p-6 inline-block mb-4">
+              <div className="bg-purple-100 rounded-full p-6 inline-block mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-12 w-12 text-emerald-600"
+                  className="h-12 w-12 text-purple-800"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -395,11 +270,11 @@ export default function CatalogPage() {
                 </svg>
               </div>
               <h3 className="text-xl font-serif font-bold mb-2">Gemstone Care</h3>
-              <p className="text-gray-600">Learn how to properly care for and maintain your precious gemstones.</p>
+              <p className="text-muted">Learn how to properly care for and maintain your precious gemstones.</p>
             </motion.div>
           </div>
           <div className="text-center mt-12">
-            <Link href="#" className="text-emerald-600 font-bold hover:text-emerald-700 transition-colors">
+            <Link href="#" className="text-purple-800 font-bold hover:text-purple-900 transition-colors">
               Read More Gemstone Articles
             </Link>
           </div>
@@ -407,14 +282,14 @@ export default function CatalogPage() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-16 bg-gray-100">
+      <section className="py-16 bg-surface-alt">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-center mb-12">What Our Clients Say</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
               <motion.div
                 key={testimonial.name}
-                className="bg-white rounded-lg shadow-md p-6"
+                className="bg-card rounded-2xl shadow-elevated p-6 border border-subtle"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
@@ -429,10 +304,10 @@ export default function CatalogPage() {
                   />
                   <div>
                     <h3 className="font-serif font-bold">{testimonial.name}</h3>
-                    <p className="text-gray-600">{testimonial.location}</p>
+                    <p className="text-muted">{testimonial.location}</p>
                   </div>
                 </div>
-                <p className="text-gray-700 italic">&quot;{testimonial.quote}&quot;</p>
+                <p className="text-muted italic">&quot;{testimonial.quote}&quot;</p>
               </motion.div>
             ))}
           </div>
@@ -449,7 +324,7 @@ export default function CatalogPage() {
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="bg-white rounded-lg p-8 max-w-2xl w-full mx-4"
+              className="bg-card rounded-2xl p-8 max-w-2xl w-full mx-4 border border-subtle shadow-elevated"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -471,14 +346,11 @@ export default function CatalogPage() {
                   />
                 </div>
                 <div>
-                  <p className="text-gray-600 mb-2">Type: {selectedGemstone.type}</p>
-                  <p className="text-gray-600 mb-2">Color: {selectedGemstone.color}</p>
-                  <p className="text-gray-600 mb-2">Size: {selectedGemstone.size}</p>
-                  <p className="text-gray-600 mb-2">Origin: {selectedGemstone.origin}</p>
-                  <p className="text-2xl font-bold text-emerald-600 mb-4">${selectedGemstone.price.toLocaleString()}</p>
-                  <p className="text-gray-700 mb-4">{selectedGemstone.description}</p>
-                  <p className="text-gray-600 mb-4">Certification: {selectedGemstone.certification}</p>
-                  <button className="bg-emerald-600 text-white px-6 py-2 rounded-md hover:bg-emerald-700 transition-colors">
+                  <p className="text-muted mb-2">Type: {selectedGemstone.type}</p>
+                  <p className="text-muted mb-2">Color: {selectedGemstone.color}</p>
+                  <p className="text-muted mb-2">Size: {selectedGemstone.size}</p>
+                  <p className="text-muted mb-4">{selectedGemstone.description}</p>
+                  <button className="bg-purple-800 text-white px-6 py-2 rounded-md hover:bg-purple-900 transition-colors">
                     Request Quote
                   </button>
                 </div>

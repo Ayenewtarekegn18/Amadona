@@ -35,11 +35,11 @@ export default function Contact() {
     };
 
     return (
-        <div className="bg-background">
+        <div className="bg-app text-app">
             {/* Hero Section */}
-            <section className="relative h-[40vh] flex items-center justify-center text-white">
+            <section className="relative h-[50vh] flex items-center justify-center text-white">
                 <Image
-                    src="/contact.png"
+                    src="/contact.jpg"
                     alt="Contact Us"
                     fill
                     style={{ objectFit: "cover" }}
@@ -58,7 +58,7 @@ export default function Contact() {
                 <div className="grid md:grid-cols-2 gap-16">
                     {/* Contact Form */}
                     <motion.div
-                        className="bg-white p-8 rounded-lg shadow-md"
+                        className="bg-card p-8 rounded-2xl shadow-elevated border border-subtle"
                         initial={{ opacity: 0, x: -50 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6 }}
@@ -81,7 +81,7 @@ export default function Contact() {
                                     value={formData.name}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className="w-full px-4 py-2 border border-subtle rounded-md focus:outline-none focus:ring-2 focus:ring-purple-700 bg-surface text-app"
                                 />
                             </div>
                             <div>
@@ -98,7 +98,7 @@ export default function Contact() {
                                     value={formData.email}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className="w-full px-4 py-2 border border-subtle rounded-md focus:outline-none focus:ring-2 focus:ring-purple-700 bg-surface text-app"
                                 />
                             </div>
                             <div>
@@ -115,7 +115,7 @@ export default function Contact() {
                                     value={formData.subject}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className="w-full px-4 py-2 border border-subtle rounded-md focus:outline-none focus:ring-2 focus:ring-purple-700 bg-surface text-app"
                                 />
                             </div>
                             <div>
@@ -132,12 +132,12 @@ export default function Contact() {
                                     onChange={handleChange}
                                     required
                                     rows={4}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className="w-full px-4 py-2 border border-subtle rounded-md focus:outline-none focus:ring-2 focus:ring-purple-700 bg-surface text-app"
                                 ></textarea>
                             </div>
                             <button
                                 type="submit"
-                                className="w-full bg-primary text-white px-6 py-3 rounded-md hover:bg-primary/90 transition-colors transform hover:scale-105"
+                                className="w-full bg-purple-800 text-white px-6 py-3 rounded-md hover:bg-purple-900 transition-colors transform hover:scale-105"
                             >
                                 Send Message
                             </button>
@@ -147,7 +147,7 @@ export default function Contact() {
                     {/* Contact Information and Map */}
                     <div className="space-y-8">
                         <motion.div
-                            className="bg-white p-8 rounded-lg shadow-md"
+                            className="bg-card p-8 rounded-2xl shadow-elevated border border-subtle"
                             initial={{ opacity: 0, x: 50 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6 }}
@@ -157,15 +157,15 @@ export default function Contact() {
                             </h2>
                             <div className="space-y-4">
                                 <div className="flex items-center space-x-4">
-                                    <Phone className="text-primary" />
+                                    <Phone className="text-purple-800" />
                                     <span>+1 (555) 123-4567</span>
                                 </div>
                                 <div className="flex items-center space-x-4">
-                                    <Mail className="text-primary" />
+                                    <Mail className="text-purple-800" />
                                     <span>info@gemstonecompany.com</span>
                                 </div>
                                 <div className="flex items-center space-x-4">
-                                    <MapPin className="text-primary" />
+                                    <MapPin className="text-purple-800" />
                                     <span>
                                         123 Gem Street, Crystal City, GS 12345
                                     </span>
@@ -174,7 +174,7 @@ export default function Contact() {
                         </motion.div>
 
                         <motion.div
-                            className="bg-white p-8 rounded-lg shadow-md"
+                            className="bg-card p-8 rounded-2xl shadow-elevated border border-subtle"
                             initial={{ opacity: 0, y: 50 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.2 }}

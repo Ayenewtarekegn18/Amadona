@@ -2,6 +2,7 @@ import type React from "react"
 import { Inter, Elsie } from "next/font/google"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
+import { ThemeProvider } from "./components/ThemeProvider"
 import "./globals.css"
 
 const inter = Inter({
@@ -30,10 +31,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${elsie.variable}`}>
-      <body className="font-sans min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-grow">{children}</main>
-        <Footer />
+      <body className="font-sans min-h-screen flex flex-col bg-app text-app transition-colors duration-300">
+        <ThemeProvider>
+          <Header />
+          <main className="flex-grow">{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   )
