@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div className="bg-app text-app">
       {/* Hero Section */}
-      <section className="relative h-[80vh] flex items-center justify-center text-white">
+      <section className="relative h-[80vh] flex items-center justify-center text-white px-4">
         <Image
           src="/hero.jpg"
           alt="Gemstones"
@@ -17,18 +17,18 @@ export default function Home() {
           style={{ objectFit: "cover" }}
           priority
         />
-        <div className="absolute inset-0 bg-black/50" />
-        <div className="relative z-10 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-4">
+        <div className="absolute inset-0 hero-overlay" />
+        <div className="relative z-10 text-center max-w-3xl mx-auto">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
             Amadoniyas Gem and Mineral World
           </h1>
-          <p className="text-xl md:text-2xl mb-8">
+          <p className="text-lg sm:text-xl md:text-2xl mb-8">
             Showcasing Ethiopia&apos;s and Africa&apos;s Gemstones, Minerals,
             and Energy Resources
           </p>
           <Link
             href="/catalog"
-            className="bg-purple-800 text-white px-8 py-3 rounded-full text-lg font-bold hover:bg-purple-900 transition-colors"
+            className="inline-flex items-center justify-center bg-purple-800 text-white px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-bold hover:bg-purple-900 transition-colors"
           >
             Explore Our Collection
           </Link>
@@ -126,27 +126,27 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
               {
+                name: "Michael Chen",
+                role: "Collector",
+                quote:
+                "I've been collecting gemstones for years, and Gemstone Co. consistently provides the rarest and most beautiful specimens I've ever seen.",
+              },
+              {
                 name: "Sarah Johnson",
                 role: "Jewelry Designer",
                 quote:
                   "The quality of gemstones from Gemstone Co. is unparalleled. Their ethical sourcing practices align perfectly with my brand values.",
-              },
-              {
-                name: "Michael Chen",
-                role: "Collector",
-                quote:
-                  "I've been collecting gemstones for years, and Gemstone Co. consistently provides the rarest and most beautiful specimens I've ever seen.",
               },
             ].map((testimonial, index) => (
               <div key={index} className="bg-card p-6 rounded-2xl shadow-elevated border border-subtle">
                 <p className="text-lg mb-4">&quot;{testimonial.quote}&quot;</p>
                 <div className="flex items-center">
                   <Image
-                    src={`/avatar-${index + 1}.jpg`}
+                    src={`/avatar${index + 1}.png`}
                     alt={testimonial.name}
                     width={50}
-                    height={50}
-                    className="rounded-full mr-4"
+                    height={40}
+                    className="rounded-full h-13 object-top mr-4 object-cover"
                   />
                   <div>
                     <p className="font-bold">{testimonial.name}</p>

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { Search, X } from "lucide-react"
 import { Gemstone, gemstones } from "../../lib/gemstoneData"
@@ -50,6 +51,7 @@ const testimonials = [
 ]
 
 export default function CatalogPage() {
+  const router = useRouter()
   const [selectedGemstone, setSelectedGemstone] = useState<Gemstone | null>(null)
   const [filters, setFilters] = useState({
     type: "",
@@ -71,6 +73,16 @@ export default function CatalogPage() {
 
     setFilteredGemstones(filtered)
   }, [filters, searchTerm])
+
+  const handleRequestQuote = (gem: Gemstone) => {
+    const params = new URLSearchParams({
+      subject: `Quote request: ${gem.name}`,
+      message: `I would like a quote for ${gem.name} (${gem.type}, ${gem.color}, ${gem.size}).`,
+    })
+
+    router.push(`/contact?${params.toString()}`)
+    setSelectedGemstone(null)
+  }
 
   return (
     <div className="bg-app text-app">
@@ -142,9 +154,8 @@ export default function CatalogPage() {
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-serif font-bold mb-2">{gemstone.name}</h3>
-                  <p className="text-muted mb-4">
-                    {gemstone.size} | {gemstone.color}
-                  </p>
+                  <p className="text-muted mb-2">{gemstone.size} | {gemstone.color}</p>
+                  <p className="text-muted mb-4 line-clamp-2">{gemstone.description}</p>
                   <button
                     onClick={() => setSelectedGemstone(gemstone)}
                     className="w-full bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-900 transition-colors"
@@ -350,7 +361,10 @@ export default function CatalogPage() {
                   <p className="text-muted mb-2">Color: {selectedGemstone.color}</p>
                   <p className="text-muted mb-2">Size: {selectedGemstone.size}</p>
                   <p className="text-muted mb-4">{selectedGemstone.description}</p>
-                  <button className="bg-purple-800 text-white px-6 py-2 rounded-md hover:bg-purple-900 transition-colors">
+                  <button
+                    onClick={() => handleRequestQuote(selectedGemstone)}
+                    className="bg-purple-800 text-white px-6 py-2 rounded-md hover:bg-purple-900 transition-colors"
+                  >
                     Request Quote
                   </button>
                 </div>

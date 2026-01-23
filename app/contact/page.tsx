@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import emailjs from "@emailjs/browser";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin } from "lucide-react";
 
@@ -12,6 +14,7 @@ const fadeIn = {
 };
 
 export default function Contact() {
+    const searchParams = useSearchParams();
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -19,19 +22,112 @@ export default function Contact() {
         message: "",
     });
 
+    const [errors, setErrors] = useState({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+    });
+
+    const [status, setStatus] = useState<"idle" | "success" | "error">(
+        "idle",
+    );
+    const [loading, setLoading] = useState(false);
+    const [submitError, setSubmitError] = useState("");
+
+    useEffect(() => {
+        const subject = searchParams.get("subject") ?? "";
+        const message = searchParams.get("message") ?? "";
+
+        if (subject || message) {
+            setFormData((prev) => ({
+                ...prev,
+                subject: subject || prev.subject,
+                message: message || prev.message,
+            }));
+        }
+    }, [searchParams]);
+
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const validateForm = () => {
+        const nextErrors = {
+            name: "",
+            email: "",
+            subject: "",
+            message: "",
+        };
+
+        if (formData.name.trim().length < 2) {
+            nextErrors.name = "Please enter your full name.";
+        }
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(formData.email.trim())) {
+            nextErrors.email = "Enter a valid email address.";
+        }
+
+        if (formData.subject.trim().length < 3) {
+            nextErrors.subject = "Subject should be at least 3 characters.";
+        }
+
+        if (formData.message.trim().length < 10) {
+            nextErrors.message = "Message should be at least 10 characters.";
+        }
+
+        setErrors(nextErrors);
+        return Object.values(nextErrors).every((msg) => msg === "");
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // Handle form submission here
-        console.log(formData);
-        // Reset form
-        setFormData({ name: "", email: "", subject: "", message: "" });
-        // Show success message (you can implement this)
+
+        if (!validateForm()) {
+            setStatus("error");
+            return;
+        }
+
+        setLoading(true);
+        setSubmitError("");
+
+        const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+        const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+        const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+        if (!serviceId || !templateId || !publicKey) {
+            setStatus("error");
+            setSubmitError("Email service is not configured. Please email amadona@gmail.com directly.");
+            setLoading(false);
+            return;
+        }
+
+        try {
+            await emailjs.send(
+                serviceId,
+                templateId,
+                {
+                    from_name: formData.name,
+                    from_email: formData.email,
+                    subject: formData.subject,
+                    message: formData.message,
+                },
+                {
+                    publicKey,
+                },
+            );
+
+            setStatus("success");
+            setFormData({ name: "", email: "", subject: "", message: "" });
+        } catch (err) {
+            setStatus("error");
+            setSubmitError("Unable to send message right now. Please try again or email amadona@gmail.com.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -45,7 +141,7 @@ export default function Contact() {
                     style={{ objectFit: "cover" }}
                     priority
                 />
-                <div className="absolute inset-0 bg-black/50" />
+                <div className="absolute inset-0 hero-overlay" />
                 <motion.h1
                     className="relative z-10 text-5xl md:text-6xl font-bold text-center"
                     {...fadeIn}
@@ -66,6 +162,21 @@ export default function Contact() {
                         <h2 className="text-3xl font-bold mb-6">
                             Send Us a Message
                         </h2>
+                        {status === "success" && (
+                            <p className="mb-4 rounded-md bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700">
+                                Thanks for reaching out. We&apos;ll reply from amadona@gmail.com soon.
+                            </p>
+                        )}
+                        {status === "error" && Object.values(errors).some(Boolean) && (
+                            <p className="mb-4 rounded-md bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
+                                Please fix the highlighted fields.
+                            </p>
+                        )}
+                        {status === "error" && submitError && (
+                            <p className="mb-4 rounded-md bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
+                                {submitError}
+                            </p>
+                        )}
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
                                 <label
@@ -81,8 +192,15 @@ export default function Contact() {
                                     value={formData.name}
                                     onChange={handleChange}
                                     required
+                                    aria-invalid={Boolean(errors.name)}
+                                    aria-describedby={errors.name ? "name-error" : undefined}
                                     className="w-full px-4 py-2 border border-subtle rounded-md focus:outline-none focus:ring-2 focus:ring-purple-700 bg-surface text-app"
                                 />
+                                {errors.name && (
+                                    <p id="name-error" className="mt-1 text-sm text-red-600">
+                                        {errors.name}
+                                    </p>
+                                )}
                             </div>
                             <div>
                                 <label
@@ -98,8 +216,15 @@ export default function Contact() {
                                     value={formData.email}
                                     onChange={handleChange}
                                     required
+                                    aria-invalid={Boolean(errors.email)}
+                                    aria-describedby={errors.email ? "email-error" : undefined}
                                     className="w-full px-4 py-2 border border-subtle rounded-md focus:outline-none focus:ring-2 focus:ring-purple-700 bg-surface text-app"
                                 />
+                                {errors.email && (
+                                    <p id="email-error" className="mt-1 text-sm text-red-600">
+                                        {errors.email}
+                                    </p>
+                                )}
                             </div>
                             <div>
                                 <label
@@ -115,8 +240,15 @@ export default function Contact() {
                                     value={formData.subject}
                                     onChange={handleChange}
                                     required
+                                    aria-invalid={Boolean(errors.subject)}
+                                    aria-describedby={errors.subject ? "subject-error" : undefined}
                                     className="w-full px-4 py-2 border border-subtle rounded-md focus:outline-none focus:ring-2 focus:ring-purple-700 bg-surface text-app"
                                 />
+                                {errors.subject && (
+                                    <p id="subject-error" className="mt-1 text-sm text-red-600">
+                                        {errors.subject}
+                                    </p>
+                                )}
                             </div>
                             <div>
                                 <label
@@ -131,15 +263,23 @@ export default function Contact() {
                                     value={formData.message}
                                     onChange={handleChange}
                                     required
+                                    aria-invalid={Boolean(errors.message)}
+                                    aria-describedby={errors.message ? "message-error" : undefined}
                                     rows={4}
                                     className="w-full px-4 py-2 border border-subtle rounded-md focus:outline-none focus:ring-2 focus:ring-purple-700 bg-surface text-app"
                                 ></textarea>
+                                {errors.message && (
+                                    <p id="message-error" className="mt-1 text-sm text-red-600">
+                                        {errors.message}
+                                    </p>
+                                )}
                             </div>
                             <button
                                 type="submit"
-                                className="w-full bg-purple-800 text-white px-6 py-3 rounded-md hover:bg-purple-900 transition-colors transform hover:scale-105"
+                                disabled={loading}
+                                className="w-full bg-purple-800 text-white px-6 py-3 rounded-md hover:bg-purple-900 transition-colors transform hover:scale-105 disabled:opacity-70 disabled:cursor-not-allowed"
                             >
-                                Send Message
+                                {loading ? "Sending..." : "Send Message"}
                             </button>
                         </form>
                     </motion.div>
@@ -158,17 +298,15 @@ export default function Contact() {
                             <div className="space-y-4">
                                 <div className="flex items-center space-x-4">
                                     <Phone className="text-purple-800" />
-                                    <span>+1 (555) 123-4567</span>
+                                    <span>0991065599</span>
                                 </div>
                                 <div className="flex items-center space-x-4">
                                     <Mail className="text-purple-800" />
-                                    <span>info@gemstonecompany.com</span>
+                                    <span>amadona@gmail.com</span>
                                 </div>
                                 <div className="flex items-center space-x-4">
                                     <MapPin className="text-purple-800" />
-                                    <span>
-                                        123 Gem Street, Crystal City, GS 12345
-                                    </span>
+                                    <span>Bole, Addis Ababa, Ethiopia</span>
                                 </div>
                             </div>
                         </motion.div>
@@ -184,7 +322,7 @@ export default function Contact() {
                             </h2>
                             <div className="aspect-w-16 aspect-h-9">
                                 <iframe
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1422937950147!2d-73.98731968459391!3d40.74844097932681!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1644982078131!5m2!1sen!2sus"
+                                    src="https://www.google.com/maps?q=Bole%2C%20Addis%20Ababa%2C%20Ethiopia&output=embed"
                                     width="100%"
                                     height="100%"
                                     style={{ border: 0 }}

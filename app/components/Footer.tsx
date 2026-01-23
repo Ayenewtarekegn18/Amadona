@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <h3 className="text-xl font-serif font-bold mb-4">Amadoniyas</h3>
-            <p className="text-muted">Discover the world&apos;s finest gemstones.</p>
+            <p className="text-muted">Discover Ethiopia&apos;s finest gemstones.</p>
           </div>
           <div>
             <h4 className="text-lg font-serif font-bold mb-4">Quick Links</h4>
@@ -37,9 +37,9 @@ export default function Footer() {
           </div>
           <div>
             <h4 className="text-lg font-serif font-bold mb-4">Contact Us</h4>
-            <p className="text-muted">123 Gem Street, Crystal City, GS 12345</p>
-            <p className="text-muted">Phone: (555) 123-4567</p>
-            <p className="text-muted">Email: info@gemstoneco.com</p>
+            <p className="text-muted">Bole, Addis Ababa, Ethiopia</p>
+            <p className="text-muted">Phone: 0991065599</p>
+            <p className="text-muted">Email: amadona@gmail.com</p>
           </div>
           <div>
             <h4 className="text-lg font-serif font-bold mb-4">Follow Us</h4>
