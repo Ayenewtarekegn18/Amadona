@@ -8,7 +8,7 @@ export type Testimonial = {
 
 export const testimonials: Testimonial[] = [
   {
-    name: "Sarah Johnson",
+    name: "Selamawit Bekele",
     location: "New York, USA",
     role: "Jewelry Designer",
     quote:
@@ -16,7 +16,7 @@ export const testimonials: Testimonial[] = [
     image: "/avatar2.png",
   },
   {
-    name: "Michael Chane",
+    name: "Eyob Kebede",
     location: "Hong Kong",
     role: "Collector",
     quote:
