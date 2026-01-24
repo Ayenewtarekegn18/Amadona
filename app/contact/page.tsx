@@ -37,9 +37,7 @@ function ContactContent() {
         message: "",
     });
 
-    const [status, setStatus] = useState<"idle" | "success" | "error">(
-        "idle",
-    );
+    const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
     const [loading, setLoading] = useState(false);
     const [submitError, setSubmitError] = useState("");
 
@@ -56,36 +54,21 @@ function ContactContent() {
         }
     }, [searchParams]);
 
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    ) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const validateForm = () => {
-        const nextErrors = {
-            name: "",
-            email: "",
-            subject: "",
-            message: "",
-        };
+        const nextErrors = { name: "", email: "", subject: "", message: "" };
 
-        if (formData.name.trim().length < 2) {
-            nextErrors.name = "Please enter your full name.";
-        }
+        if (formData.name.trim().length < 2) nextErrors.name = "Please enter your full name.";
 
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailPattern.test(formData.email.trim())) {
-            nextErrors.email = "Enter a valid email address.";
-        }
+        if (!emailPattern.test(formData.email.trim())) nextErrors.email = "Enter a valid email address.";
 
-        if (formData.subject.trim().length < 3) {
-            nextErrors.subject = "Subject should be at least 3 characters.";
-        }
+        if (formData.subject.trim().length < 3) nextErrors.subject = "Subject should be at least 3 characters.";
 
-        if (formData.message.trim().length < 10) {
-            nextErrors.message = "Message should be at least 10 characters.";
-        }
+        if (formData.message.trim().length < 10) nextErrors.message = "Message should be at least 10 characters.";
 
         setErrors(nextErrors);
         return Object.values(nextErrors).every((msg) => msg === "");
@@ -123,9 +106,7 @@ function ContactContent() {
                     subject: formData.subject,
                     message: formData.message,
                 },
-                {
-                    publicKey,
-                },
+                { publicKey },
             );
 
             setStatus("success");
@@ -142,18 +123,9 @@ function ContactContent() {
         <div className="bg-app text-app">
             {/* Hero Section */}
             <section className="relative h-[50vh] flex items-center justify-center text-white">
-                <Image
-                    src="/contact.jpg"
-                    alt="Contact Us"
-                    fill
-                    style={{ objectFit: "cover" }}
-                    priority
-                />
+                <Image src="/contact.jpg" alt="Contact Us" fill style={{ objectFit: "cover" }} priority />
                 <div className="absolute inset-0 hero-overlay" />
-                <motion.h1
-                    className="relative z-10 text-5xl md:text-6xl font-bold text-center"
-                    {...fadeIn}
-                >
+                <motion.h1 className="relative z-10 text-5xl md:text-6xl font-bold text-center" {...fadeIn}>
                     Contact Us
                 </motion.h1>
             </section>
@@ -167,30 +139,23 @@ function ContactContent() {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6 }}
                     >
-                        <h2 className="text-3xl font-bold mb-6">
-                            Send Us a Message
-                        </h2>
+                        <h2 className="text-3xl font-bold mb-6">Send Us a Message</h2>
+
                         {status === "success" && (
-                            <p className="mb-4 rounded-md bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700">
+                            <p className="mb-4 rounded-xl bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700">
                                 Thanks for reaching out. We&apos;ll reply from amadona@gmail.com soon.
                             </p>
                         )}
                         {status === "error" && Object.values(errors).some(Boolean) && (
-                            <p className="mb-4 rounded-md bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
-                                Please fix the highlighted fields.
-                            </p>
+                            <p className="mb-4 rounded-xl bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">Please fix the highlighted fields.</p>
                         )}
                         {status === "error" && submitError && (
-                            <p className="mb-4 rounded-md bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
-                                {submitError}
-                            </p>
+                            <p className="mb-4 rounded-xl bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">{submitError}</p>
                         )}
+
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
-                                <label
-                                    htmlFor="name"
-                                    className="block mb-2 font-semibold"
-                                >
+                                <label htmlFor="name" className="block mb-2 font-semibold">
                                     Name
                                 </label>
                                 <input
@@ -202,19 +167,13 @@ function ContactContent() {
                                     required
                                     aria-invalid={Boolean(errors.name)}
                                     aria-describedby={errors.name ? "name-error" : undefined}
-                                    className="w-full px-4 py-2 border border-subtle rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-700 bg-surface text-app"
+                                    className="w-full px-4 py-2 border border-subtle rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-700 bg-surface text-app"
                                 />
-                                {errors.name && (
-                                    <p id="name-error" className="mt-1 text-sm text-red-600">
-                                        {errors.name}
-                                    </p>
-                                )}
+                                {errors.name && <p id="name-error" className="mt-1 text-sm text-red-600">{errors.name}</p>}
                             </div>
+
                             <div>
-                                <label
-                                    htmlFor="email"
-                                    className="block mb-2 font-semibold"
-                                >
+                                <label htmlFor="email" className="block mb-2 font-semibold">
                                     Email
                                 </label>
                                 <input
@@ -226,19 +185,13 @@ function ContactContent() {
                                     required
                                     aria-invalid={Boolean(errors.email)}
                                     aria-describedby={errors.email ? "email-error" : undefined}
-                                    className="w-full px-4 py-2 border border-subtle rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-700 bg-surface text-app"
+                                    className="w-full px-4 py-2 border border-subtle rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-700 bg-surface text-app"
                                 />
-                                {errors.email && (
-                                    <p id="email-error" className="mt-1 text-sm text-red-600">
-                                        {errors.email}
-                                    </p>
-                                )}
+                                {errors.email && <p id="email-error" className="mt-1 text-sm text-red-600">{errors.email}</p>}
                             </div>
+
                             <div>
-                                <label
-                                    htmlFor="subject"
-                                    className="block mb-2 font-semibold"
-                                >
+                                <label htmlFor="subject" className="block mb-2 font-semibold">
                                     Subject
                                 </label>
                                 <input
@@ -250,19 +203,13 @@ function ContactContent() {
                                     required
                                     aria-invalid={Boolean(errors.subject)}
                                     aria-describedby={errors.subject ? "subject-error" : undefined}
-                                    className="w-full px-4 py-2 border border-subtle rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-700 bg-surface text-app"
+                                    className="w-full px-4 py-2 border border-subtle rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-700 bg-surface text-app"
                                 />
-                                {errors.subject && (
-                                    <p id="subject-error" className="mt-1 text-sm text-red-600">
-                                        {errors.subject}
-                                    </p>
-                                )}
+                                {errors.subject && <p id="subject-error" className="mt-1 text-sm text-red-600">{errors.subject}</p>}
                             </div>
+
                             <div>
-                                <label
-                                    htmlFor="message"
-                                    className="block mb-2 font-semibold"
-                                >
+                                <label htmlFor="message" className="block mb-2 font-semibold">
                                     Message
                                 </label>
                                 <textarea
@@ -274,18 +221,15 @@ function ContactContent() {
                                     aria-invalid={Boolean(errors.message)}
                                     aria-describedby={errors.message ? "message-error" : undefined}
                                     rows={4}
-                                    className="w-full px-4 py-2 border border-subtle rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-700 bg-surface text-app"
+                                    className="w-full px-4 py-2 border border-subtle rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-700 bg-surface text-app"
                                 ></textarea>
-                                {errors.message && (
-                                    <p id="message-error" className="mt-1 text-sm text-red-600">
-                                        {errors.message}
-                                    </p>
-                                )}
+                                {errors.message && <p id="message-error" className="mt-1 text-sm text-red-600">{errors.message}</p>}
                             </div>
+
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full bg-purple-800 text-white px-6 py-3 rounded-lg hover:bg-purple-900 transition-colors transform hover:scale-105 disabled:opacity-70 disabled:cursor-not-allowed"
+                                className="w-full bg-purple-800 text-white px-6 py-3 rounded-xl hover:bg-purple-900 transition-colors transform hover:scale-105 disabled:opacity-70 disabled:cursor-not-allowed"
                             >
                                 {loading ? "Sending..." : "Send Message"}
                             </button>
@@ -300,9 +244,7 @@ function ContactContent() {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6 }}
                         >
-                            <h2 className="text-3xl font-bold mb-6">
-                                Contact Information
-                            </h2>
+                            <h2 className="text-3xl font-bold mb-6">Contact Information</h2>
                             <div className="space-y-4">
                                 <div className="flex items-center space-x-4">
                                     <Phone className="text-purple-800" />
@@ -325,9 +267,7 @@ function ContactContent() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.2 }}
                         >
-                            <h2 className="text-3xl font-bold mb-6">
-                                Our Location
-                            </h2>
+                            <h2 className="text-3xl font-bold mb-6">Our Location</h2>
                             <div className="aspect-w-16 aspect-h-9">
                                 <iframe
                                     src="https://www.google.com/maps?q=Bole%2C%20Addis%20Ababa%2C%20Ethiopia&output=embed"
@@ -336,7 +276,7 @@ function ContactContent() {
                                     style={{ border: 0 }}
                                     allowFullScreen
                                     loading="lazy"
-                                    className="rounded-lg"
+                                    className="rounded-xl"
                                 ></iframe>
                             </div>
                         </motion.div>

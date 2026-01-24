@@ -275,7 +275,7 @@ export default function AboutUs() {
             <section className="py-20 bg-surface">
                 <div className="container mx-auto px-4">
                     <motion.div
-                        className="max-w-4xl mx-auto bg-accent-foreground p-8 md:p-12 rounded-lg shadow-md"
+                        className="max-w-4xl mx-auto bg-accent-foreground p-8 md:p-12 rounded-xl shadow-md"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}

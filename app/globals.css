@@ -74,7 +74,7 @@
   input,
   textarea,
   select {
-    @apply rounded-lg;
+    @apply rounded-xl;
   }
 }
 
