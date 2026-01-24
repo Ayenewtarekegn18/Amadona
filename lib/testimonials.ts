@@ -16,7 +16,7 @@ export const testimonials: Testimonial[] = [
     image: "/avatar2.png",
   },
   {
-    name: "Michael Chen",
+    name: "Michael Chane",
     location: "Hong Kong",
     role: "Collector",
     quote:
